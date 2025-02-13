@@ -1,0 +1,18 @@
+[build-system]
+requires = ["setuptools", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "data-structures"
+version = "0.1.0"
+description = "Common data structures implemented in Python"
+authors = [{ name = "Miguel Angel Bruni" }]
+dependencies = [
+    "pytest",
+]
+
+[tool.setuptools]
+packages = ["data-structures"]
+
+[project.scripts]
+data.structures-cli = "data-structures.cli:main"
