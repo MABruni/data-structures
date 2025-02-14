@@ -39,7 +39,7 @@ class Deque:
         Args:
             value (any): The value to be added to the front of the deque.
         """
-        self._deque.insert(0, [value])
+        self._deque.insert(0, value)
 
     def peek_left(self) -> any:
         """

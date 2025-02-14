@@ -12,7 +12,7 @@ dependencies = [
 ]
 
 [tool.setuptools]
-packages = ["data-structures"]
+packages = ["data_structures", "tests"]
 
 [project.scripts]
-data.structures-cli = "data-structures.cli:main"
+structures-cli = "data_structures_project.cli:main"
