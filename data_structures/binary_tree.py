@@ -57,7 +57,7 @@ class BinaryTree:
             start = end
             end = start + 2**level
             level += 1
-        print("\n".join(message))
+        return ("\n".join(message))
 
     def bfs(self) -> list[Node] | None:
         nodes = []
@@ -117,7 +117,7 @@ class BinaryTree:
         if self.is_empty():
             return 'Binary tree is empty'
 
-        target_node = self.find(target) 
+        target_node = self.find(target)
         if target_node is None:
             return 'Target value not found in the binary tree'
 
@@ -125,7 +125,7 @@ class BinaryTree:
 
         # Target node is not the last node
         if last_node is not target_node:
-            # Unlink last node from its parent
+            # Unlink last node's parent from last_node
             if last_node.parent.left is last_node:
                 last_node.parent.left = None
             elif last_node.parent.right is last_node:
@@ -134,19 +134,34 @@ class BinaryTree:
             if target_node is self._root:
                 self._root = last_node
                 last_node.parent = None
+            # Update last node's parent
             else:
                 last_node.parent = target_node.parent
-            # Update last node's children references
-            last_node.left, last_node.right = target_node.left, target_node.right
 
-            # Remove the link between last node and its parent
-            if target_node.left:
+            # Make last node inherit target_node children.
+            last_node.left = target_node.left if target_node.left is not last_node else None
+            last_node.right = target_node.right if target_node.right is not last_node else None
+
+            # Update target node's children parent pointer.
+            if target_node.left and target_node.left is not last_node:
                 target_node.left.parent = last_node
-            if target_node.right:
+            if target_node.right and target_node.right is not last_node:
                 target_node.right.parent = last_node
+
+            # Update target node's parent to point at last node.
+            if target_node.parent:
+                if target_node.parent.left is target_node:
+                    target_node.parent.left = last_node
+                elif target_node.parent.right is target_node:
+                    target_node.parent.right = last_node
 
             # Remove all links from target_node.
             target_node.parent, target_node.right, target_node.left = None, None, None
+
+            # Keep tree structure.
+            if last_node.right is None and last_node.left is not None:
+                last_node.right = last_node.left
+                last_node.left = None
 
         # Target node is the last node
         else:
